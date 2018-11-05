@@ -17,30 +17,48 @@
  */
 namespace org.acme.pii
 
-concept Grade {
-  o Y1T1 yearOnefirstTerm
-  o Y1T2 yearOnesecTerm
+
+concept creditEarn{
+  o Integer[] subjectCredit
+
 }
 
-concept Y1T1{
-  o Double math1
-  o Double programming
-}
-
-concept Y1T2{
-  o Double math2
-  o Double physic
-}
-
-participant Student identified by studentID {
-  o String studentID
+participant registrar identified by email {
   o String email
   o String firstName
   o String lastName
-  o DateTime regDate
-  o Boolean graduated
-    o Grade grade
 }
+
+participant techer identified by email {
+  o String email
+  o String firstName
+  o String lastName
+}
+
+participant student identified by studentID {
+  o String studentID
+  o DateTime dateReg 
+
+}
+
+asset credit identified by creditID {
+  o String creditID
+  o creditEarn yearOneTermOne
+  o creditEarn yearOneTermTwo
+  o creditEarn yearTwoTermOne
+  o creditEarn yearTwoTermTwo
+  o creditEarn yearThreeTermOne
+  o creditEarn yearThreeTermTwo
+  o creditEarn yearFourTermOne
+  o creditEarn yearFourTermTwo
+  --> student student
+}
+
+
+
+
+
+
 
 abstract transaction MemberTransaction {
   o String memberId
