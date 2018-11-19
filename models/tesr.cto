@@ -46,20 +46,17 @@ asset studentCredit identified by creditID {
 asset contract identified by contractID{
   o String contractID
   o Integer credit
-  o Boolean Pass
+  o Boolean pass
   --> student student
   --> teacher teacher
 }
 
-abstract transaction MemberTransaction {
-  o String memberId
-}
+
 
 transaction demoSetUp {
 
 }
 
 
-event MemberEvent {
-  o MemberTransaction memberTransaction
-}
+
+
