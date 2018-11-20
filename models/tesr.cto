@@ -39,23 +39,30 @@ participant student identified by studentID {
 
 asset studentCredit identified by creditID {
   o String creditID
-  o Integer[] credit
+  o Integer[] credit optional
+  o Integer creditCount
   --> student student
 }
 
 asset contract identified by contractID{
   o String contractID
   o Integer credit
-  o Boolean pass
+  o Boolean passed
+  o Boolean checked
   --> student student
   --> teacher teacher
 }
 
-
-
 transaction demoSetUp {
 
 }
+
+transaction creditApproval {
+  --> studentCredit studentCredit
+  --> contract contract
+  o DateTime timeStamp
+}
+
 
 
 
