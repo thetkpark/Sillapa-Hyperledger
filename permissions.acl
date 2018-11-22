@@ -12,22 +12,56 @@
  * limitations under the License.
  */
 
-/**
- * Sample access control list.
- */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "org.acme.pii.*"
-    operation: READ
-    resource: "org.acme.pii.*"
-    action: ALLOW
+
+rule StudentCanCreateContract {
+  description: "Allow student to register a contract"
+  participant: "org.acme.pii.student"
+  operation: CREATE
+  resource: "org.acme.pii.contract"
+  action: ALLOW
 }
 
-rule EverybodyCanSubmitTransactions {
-    description: "Allow all participants to submit transactions"
-    participant: "org.acme.pii.*"
-    operation: CREATE
-    resource: "org.acme.pii.demoSetUp"
+rule StudentCanAccesscreateContract {
+  description: "Allow student to register a contract"
+  participant: "org.acme.pii.student"
+  operation: CREATE
+  resource: "org.acme.pii.createContract"
+  action: ALLOW
+}
+
+
+rule TeacherCanApproveCredit {
+  description: "Allow teache to approve credit"
+  participant: "org.acme.pii.teacher"
+  operation: CREATE, UPDATE
+  resource: "org.acme.pii.creditApproval"
+  transaction: "org.acme.pii.creditApproval"
+  //check if credit belown to this teacher (tonight)
+  action: ALLOW
+}
+
+
+rule RegistrarCanCheckGraduate {
+  description: "Allow registrar to check if student graduate"
+  participant: "org.acme.pii.registrar"
+  operation: ALL
+  resource: "org.acme.pii.graduateCheck"
+  action: ALLOW
+}
+
+rule RegistrarCanModStudent {
+  description: "Allow registrar to check if student graduate"
+  participant: "org.acme.pii.registrar"
+  operation: ALL
+  resource: "org.acme.pii.student"
+  action: ALLOW
+}
+
+rule adminRegistrarCanDoEverything {
+    description: "Allow administrators to do anything"
+    participant: "org.acme.pii.adminRegistrar"
+    operation: ALL
+    resource: "org.acme.pii.*"
     action: ALLOW
 }
 
@@ -39,6 +73,21 @@ rule OwnerHasFullAccessToTheirAssets {
     condition: (r.owner.getIdentifier() === p.getIdentifier())
     action: ALLOW
 }
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+rule EverybodyCanReadEverything {
+    description: "Allow all participants read access to all resources"
+    participant: "org.acme.pii.*"
+    operation: READ
+    resource: "org.acme.pii.*"
+    action: ALLOW
+}
+
 
 rule SystemACL {
     description: "System ACL to permit all access"

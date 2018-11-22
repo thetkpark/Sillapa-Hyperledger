@@ -17,6 +17,19 @@
  */
 namespace org.acme.pii
 
+enum status {
+  o PASSED
+  o FAILED
+  o ONGOING
+}
+
+participant adminRegistrar identified by email {
+  o String email
+  o String firstName
+  o String lastName
+}
+
+
 participant registrar identified by email {
   o String email
   o String firstName
@@ -50,7 +63,7 @@ asset studentCredit identified by creditID {
 asset contract identified by contractID{
   o String contractID
   o Integer credit
-  o Boolean passed
+  o status status
   o String studentID
   --> student student
   --> teacher teacher
@@ -79,5 +92,8 @@ transaction createContract {
   --> teacher teacher
 }
 
+transaction deleteContract {
+  --> contract contract
+}
 
 
