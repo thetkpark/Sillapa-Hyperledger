@@ -35,6 +35,7 @@ participant student identified by studentID {
   o String firstName
   o String lastName
   o DateTime dateReg 
+  o DateTime dateGrad optional
   o Boolean graduated
   o Integer creditRequire
 }
@@ -50,7 +51,6 @@ asset contract identified by contractID{
   o String contractID
   o Integer credit
   o Boolean passed
-  o Boolean checked
   --> student student
   --> teacher teacher
 }
@@ -71,7 +71,11 @@ transaction graduateCheck {
   o DateTime timeStamp
 }
 
-
+transaction createContract {
+  o Integer credit
+  --> student student
+  --> teacher teacher
+}
 
 
 
