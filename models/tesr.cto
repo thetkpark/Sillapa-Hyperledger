@@ -51,6 +51,7 @@ asset contract identified by contractID{
   o String contractID
   o Integer credit
   o Boolean passed
+  o String studentID
   --> student student
   --> teacher teacher
 }
@@ -72,6 +73,7 @@ transaction graduateCheck {
 }
 
 transaction createContract {
+  o String contractID
   o Integer credit
   --> student student
   --> teacher teacher
