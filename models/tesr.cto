@@ -35,6 +35,8 @@ participant student identified by studentID {
   o String firstName
   o String lastName
   o DateTime dateReg 
+  o Boolean graduated
+  o Integer creditRequire
 }
 
 asset studentCredit identified by creditID {
@@ -63,8 +65,10 @@ transaction creditApproval {
   o DateTime timeStamp
 }
 
-transaction transactionName {
-  o String detail
+transaction graduateCheck {
+  --> student student
+  --> studentCredit studentCredit
+  o DateTime timeStamp
 }
 
 
