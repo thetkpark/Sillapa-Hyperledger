@@ -95,5 +95,3 @@ transaction createContract {
 transaction deleteContract {
   --> contract contract
 }
-
-
