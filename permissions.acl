@@ -14,15 +14,17 @@
 
 
 rule StudentCanCreateContract {
-  description: "Allow student to register a contract"
-  participant: "org.acme.pii.student"
+  description: "Allow student to create their own contract"
+  participant(m): "org.acme.pii.student"
   operation: CREATE
-  resource: "org.acme.pii.contract"
+  resource(res): "org.acme.pii.contract"
+  transaction: "org.acme.pii.createContract"
+  condition: (res.student.getIdentifier() == m.getIdentifier())
   action: ALLOW
 }
 
 rule StudentCanAccesscreateContract {
-  description: "Allow student to register a contract"
+  description: "Allow student access createContract transaction"
   participant: "org.acme.pii.student"
   operation: CREATE
   resource: "org.acme.pii.createContract"
@@ -31,12 +33,30 @@ rule StudentCanAccesscreateContract {
 
 
 rule TeacherCanApproveCredit {
-  description: "Allow teache to approve credit"
+  description: "Teacher can approve credit if it belong to them"
+  participant(m): "org.acme.pii.teacher"
+  operation: UPDATE
+  resource(res): "org.acme.pii.contract"
+  transaction: "org.acme.pii.creditApproval"
+  condition: (res.teacher.getIdentifier() == m.getIdentifier())
+  action: ALLOW
+}
+
+rule TeacherCanModStudentCredit {
+  description: "Description of the Transactional ACL rule"
+  participant: "org.acme.pii.teacher"
+  operation: UPDATE
+  resource(res): "org.acme.pii.studentCredit"
+  transaction(tx): "org.acme.pii.creditApproval"
+  condition: (res.student.getIdentifier() == tx.studentCredit.student.getIdentifier())
+  action: ALLOW
+}
+
+rule TeacherCanSummitCreditApproval {
+  description: "Allow teacher to approve credit"
   participant: "org.acme.pii.teacher"
   operation: CREATE, UPDATE
   resource: "org.acme.pii.creditApproval"
-  transaction: "org.acme.pii.creditApproval"
-  //check if credit belown to this teacher (tonight)
   action: ALLOW
 }
 
@@ -52,8 +72,16 @@ rule RegistrarCanCheckGraduate {
 rule RegistrarCanModStudent {
   description: "Allow registrar to check if student graduate"
   participant: "org.acme.pii.registrar"
-  operation: ALL
+  operation: CREATE,UPDATE
   resource: "org.acme.pii.student"
+  action: ALLOW
+}
+
+rule RegistrarCanCreatestudentCredit {
+  description: "Allow registrar to create studentCredit asset"
+  participant: "org.acme.pii.registrar"
+  operation: CREATE,UPDATE
+  resource: "org.acme.pii.studentCredit"
   action: ALLOW
 }
 
