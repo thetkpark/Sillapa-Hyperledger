@@ -50,14 +50,9 @@ participant student identified by studentID {
   o DateTime dateReg 
   o DateTime dateGrad optional
   o Boolean graduated
-  o Integer creditRequire
-}
-
-asset studentCredit identified by creditID {
-  o String creditID
   o Integer[] credit optional
   o Integer creditCount
-  --> student student
+  o Integer creditRequire
 }
 
 asset contract identified by contractID{
@@ -74,14 +69,13 @@ transaction demoSetUp {
 }
 
 transaction creditApproval {
-  --> studentCredit studentCredit
+  --> student student
   --> contract contract
   o DateTime timeStamp
 }
 
 transaction graduateCheck {
   --> student student
-  --> studentCredit studentCredit
   o DateTime timeStamp
 }
 
